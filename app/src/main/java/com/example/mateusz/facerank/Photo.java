@@ -7,7 +7,7 @@ import android.net.Uri;
  */
 public class Photo {
 
-    private Uri photoUri;
+    private Uri photoUri; //może ID użytkownika (to bedzie chyba najlepsza opcja gdy wykorzystamy w pełni facebooka)
     private float rating;
 
 

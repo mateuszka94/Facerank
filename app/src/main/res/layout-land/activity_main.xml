@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".Main" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center|center_horizontal">
+
+
+    <ImageView
+        android:layout_width="0dp"
+        android:id="@+id/leftImage"
+        android:layout_gravity="left|center_vertical"
+        android:adjustViewBounds="true"
+        android:layout_weight="1"
+        android:layout_height="fill_parent" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:id="@+id/rightImage"
+        android:layout_gravity="center_vertical|right"
+        android:adjustViewBounds="true"
+        android:layout_weight="1"
+        android:layout_height="fill_parent" />
+
+
+</LinearLayout>

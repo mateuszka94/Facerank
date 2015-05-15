@@ -10,8 +10,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/leftImage"
         android:layout_gravity="start|center_vertical"
-        android:adjustViewBounds="true"
-        android:minHeight="240dp"
+        android:minHeight="160dp"
         android:minWidth="160dp"
         android:onClick="onClick" />
 
@@ -20,7 +19,7 @@
 		android:layout_height="wrap_content"
 		android:id="@+id/rightImage"
 		android:layout_gravity="center_vertical"
-		android:minHeight="240dp"
+		android:minHeight="160dp"
 		android:minWidth="160dp"
 		android:onClick="onClick" />
 

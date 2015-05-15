@@ -2,6 +2,7 @@ package com.example.mateusz.facerank;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -24,16 +25,18 @@ public class Main extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+		setContentView( R.layout.activity_main );
 
-        left = ( ImageView ) findViewById( R.id.leftImage );
+		left = ( ImageView ) findViewById( R.id.leftImage );
         right = ( ImageView ) findViewById( R.id.rightImage );
 
         ids = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.profile_id)));
-
+		Log.d("ImageView Main", "" + findViewById( R.id.leftImage ));
 		photos = new ArrayList< Photo >();
         photoManager = new PhotoManager();
 		photoManager.createPhotos( photos, ids );
-		photoManager.choosePictures( left, right, ids, getApplicationContext() );
+		photoManager.loadPicture( left, ids, getApplicationContext() );
+		photoManager.loadPicture( right, ids, getApplicationContext() );
     }
 
     @Override
@@ -48,6 +51,7 @@ public class Main extends Activity {
 
     public void onClick( View view ){
         //losuj kolejne zdjęcia i je wyświetl
-        photoManager.choosePictures(left, right, ids, getApplicationContext());
+        photoManager.loadPicture( left, ids, getApplicationContext() );
+		photoManager.loadPicture( right, ids, getApplicationContext() );
 	}
 }

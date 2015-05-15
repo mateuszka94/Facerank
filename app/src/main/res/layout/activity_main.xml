@@ -9,19 +9,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/leftImage"
-        android:layout_gravity="left|center_vertical"
+        android:layout_gravity="start|center_vertical"
         android:adjustViewBounds="true"
         android:minHeight="240dp"
-        android:minWidth="120dp"
-        android:onClick="OnClick" />
-
-	<com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp" />
+        android:minWidth="160dp"
+        android:onClick="onClick" />
 
 	<ImageView
 		android:layout_width="wrap_content"
@@ -29,8 +21,8 @@
 		android:id="@+id/rightImage"
 		android:layout_gravity="center_vertical"
 		android:minHeight="240dp"
-		android:minWidth="120dp"
-		android:onClick="OnClick" />
+		android:minWidth="160dp"
+		android:onClick="onClick" />
 
 
 </LinearLayout>

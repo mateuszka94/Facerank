@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import java.io.InputStream;
 
 /**
- * Created by Mateusz on 2015-04-26.
+ * Created by Mateusz & Grzegorz on 2015-04-26.
  */
 public class WebManager extends AsyncTask<String, Void, Bitmap> {
 

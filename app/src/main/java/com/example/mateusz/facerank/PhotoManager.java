@@ -9,10 +9,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Created by Mateusz on 2015-04-26.
+ * Created by Mateusz & Grzegorz on 2015-04-26.
  */
 public class PhotoManager {
-    //prawdopodobnie będzie niepotrzebny
     Random random = new Random();
 
     public void choosePictures(ImageView leftView, ImageView rightView, ArrayList<String> facebookIDs, Context context) {
@@ -23,6 +22,13 @@ public class PhotoManager {
         Picasso.with(context).load("http://graph.facebook.com/" + leftId + "/picture?type=large").into(leftView);
         Picasso.with(context).load("http://graph.facebook.com/" + rightId + "/picture?type=large").into(rightView);
     }
+
+	public void createPhotos( ArrayList< Photo > photos, ArrayList< String > ids ) {
+		if( !( photos.size() == 0 ) )
+			return;
+		for( String id : ids )
+			photos.add( new Photo( id ) );
+	}
 
 
 }

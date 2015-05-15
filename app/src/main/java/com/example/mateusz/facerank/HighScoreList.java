@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Mateusz on 2015-05-03.
+ * Created by Mateusz & Grzegorz on 2015-05-03.
  */
 public class HighScoreList extends ListFragment {
     OnItemSelectedListener mCallback;

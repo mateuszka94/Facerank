@@ -13,7 +13,8 @@ import java.util.Random;
 
 public class Main extends Activity {
 	Random random = new Random();
-	ArrayList<String> usersIds;
+	ArrayList<String> ids;
+	ArrayList<Photo> photos;
 
     ImageView right;
     ImageView left;
@@ -27,11 +28,12 @@ public class Main extends Activity {
         left = ( ImageView ) findViewById( R.id.leftImage );
         right = ( ImageView ) findViewById( R.id.rightImage );
 
+        ids = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.profile_id)));
 
-        usersIds = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.profile_id)));
-
+		photos = new ArrayList< Photo >();
         photoManager = new PhotoManager();
-
+		photoManager.createPhotos( photos, ids );
+		photoManager.choosePictures( left, right, ids, getApplicationContext() );
     }
 
     @Override
@@ -44,8 +46,8 @@ public class Main extends Activity {
         super.onPause();
     }
 
-    public void OnClick( View view ){
+    public void onClick( View view ){
         //losuj kolejne zdjęcia i je wyświetl
-        photoManager.choosePictures(left, right, usersIds, getApplicationContext());
+        photoManager.choosePictures(left, right, ids, getApplicationContext());
 	}
 }

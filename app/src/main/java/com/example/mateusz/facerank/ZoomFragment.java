@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by Mateusz on 2015-05-03.
+ * Created by Mateusz & Grzegorz on 2015-05-03.
  */
 public class ZoomFragment extends Fragment {
     final static String ARG_POSITION = "position";

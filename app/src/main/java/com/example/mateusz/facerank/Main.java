@@ -35,8 +35,8 @@ public class Main extends Activity {
 		photos = new ArrayList< Photo >();
         photoManager = new PhotoManager();
 		photoManager.createPhotos( photos, ids );
-		photoManager.loadPicture( left, ids, getApplicationContext() );
-		photoManager.loadPicture( right, ids, getApplicationContext() );
+		photoManager.loadPicture( left, photos, getApplicationContext(), true );
+		photoManager.loadPicture( right, photos, getApplicationContext(), false );
     }
 
     @Override
@@ -49,9 +49,13 @@ public class Main extends Activity {
         super.onPause();
     }
 
-    public void onClick( View view ){
+    public void onClick( View view ) {
         //losuj kolejne zdjęcia i je wyświetl
-        photoManager.loadPicture( left, ids, getApplicationContext() );
-		photoManager.loadPicture( right, ids, getApplicationContext() );
+		if( view == left )
+			photoManager.setWinnerLoser( true );
+		else
+			photoManager.setWinnerLoser( false );
+        photoManager.loadPicture( left, photos, getApplicationContext(), true );
+		photoManager.loadPicture( right, photos, getApplicationContext(), false );
 	}
 }

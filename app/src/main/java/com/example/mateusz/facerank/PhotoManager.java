@@ -15,34 +15,50 @@ import java.util.Random;
  */
 public class PhotoManager {
     Random random = new Random();
+	ArrayList< Photo > photos;
+	int left;
+	int right;
 
-    public void loadPicture( final ImageView imageView, final ArrayList< String > facebookIDs, final Context context ) {
-
-		int id = random.nextInt( facebookIDs.size() );
-
-		Picasso.with( context ).load( "https://graph.facebook.com/" + id + "/picture?type=large" )
+    public void loadPicture( final ImageView imageView, final ArrayList< Photo > photos, final Context context, final boolean isLeft ) {
+		//isLeft==true if imageView is left
+		//isLeft==right if imageView is right
+		final int index = random.nextInt( photos.size() );
+		final Photo photo = photos.get( index );
+		Picasso.with( context ).load( "https://graph.facebook.com/" + photo.getId() + "/picture?type=large" )
 				.resize( 160, 160 ).into( imageView, new Callback() {
 			@Override
 			public void onSuccess() {
 				Log.d( "Picasso_ID", "" + "Załadowany." );
+				if( isLeft )
+					left = index;
+				else
+					right = index;
 			}
 
 			@Override
 			public void onError() {
-				Log.d( "Picasso_ID", "" + "Problem." );
-				loadPicture( imageView, facebookIDs, context );
+				Log.d( "Picasso_ID", "" + "Problem: " + index );
+				loadPicture( imageView, photos, context, isLeft );
 			}
 		} );
 	}
-
-	//public void
 
 	public void createPhotos( ArrayList< Photo > photos, ArrayList< String > ids ) {
 		if( !( photos.size() == 0 ) )
 			return;
 		for( String id : ids )
 			photos.add( new Photo( id ) );
+		this.photos = photos;
 	}
 
-
+	public void setWinnerLoser( boolean leftWon ) {
+		Photo left = photos.get( this.left );
+		Photo right = photos.get( this.right );
+		left.setAppearances( left.getAppearances() + 1 );
+		right.setAppearances( right.getAppearances() + 1 );
+		if( leftWon )
+			left.setVotes( left.getVotes() + 1 );
+		else
+			right.setVotes( right.getVotes() + 1 );
+	}
 }

@@ -13,12 +13,12 @@ import java.util.Random;
 //TODO: access token; GET... /me;
 
 public class Main extends Activity {
-	Random random = new Random();
-	ArrayList<String> ids;
-	ArrayList<Photo> photos;
+	private Random random = new Random();
+	private ArrayList<String> ids;
+	private ArrayList<Photo> photos;
 
-    ImageView right;
-    ImageView left;
+    private ImageView right;
+    private ImageView left;
 
     PhotoManager photoManager;
 

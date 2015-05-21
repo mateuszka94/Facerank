@@ -14,10 +14,10 @@ import java.util.Random;
  * Created by Mateusz & Grzegorz on 2015-04-26.
  */
 public class PhotoManager {
-    Random random = new Random();
-	ArrayList< Photo > photos;
-	int left;
-	int right;
+    private Random random = new Random();
+	private ArrayList< Photo > photos;
+	private int left;
+	private int right;
 
     public void loadPicture( final ImageView imageView, final ArrayList< Photo > photos, final Context context, final boolean isLeft ) {
 		//isLeft==true if imageView is left

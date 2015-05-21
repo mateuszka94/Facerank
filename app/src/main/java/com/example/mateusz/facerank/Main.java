@@ -1,6 +1,7 @@
 package com.example.mateusz.facerank;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -35,8 +36,8 @@ public class Main extends Activity {
 		photos = new ArrayList< Photo >();
         photoManager = new PhotoManager();
 		photoManager.createPhotos( photos, ids );
-		photoManager.loadPicture( left, photos, getApplicationContext(), true );
-		photoManager.loadPicture( right, photos, getApplicationContext(), false );
+		photoManager.loadPicture( left, getApplicationContext(), true );
+		photoManager.loadPicture( right, getApplicationContext(), false );
     }
 
     @Override
@@ -55,15 +56,13 @@ public class Main extends Activity {
 			photoManager.setWinnerLoser( true );
 		else
 			photoManager.setWinnerLoser( false );
-        photoManager.loadPicture( left, photos, getApplicationContext(), true );
-		photoManager.loadPicture( right, photos, getApplicationContext(), false );
+        photoManager.loadPicture( left, getApplicationContext(), true );
+		photoManager.loadPicture( right, getApplicationContext(), false );
 	}
 
-    public highScore(View view){
-
+    public void highScore(View view){
         Intent intent = new Intent(this, HighScoreActivity.class);
         startActivity(intent);
-
     }
 
 }

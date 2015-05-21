@@ -24,7 +24,7 @@ public class PhotoManager {
         return photos;
     }
 
-    public void loadPicture(ImageView imageView, Context context, int index){
+    public void loadPicture(final ImageView imageView, final Context context, final int index){
 
         final Photo photo = photos.get( index );
         Picasso.with( context ).load( "https://graph.facebook.com/" + photo.getId() + "/picture?type=large" )
@@ -37,7 +37,7 @@ public class PhotoManager {
             @Override
             public void onError() {
                 Log.d( "Picasso_ID", "" + "Problem: " + index );
-                loadPicture( imageView, photos, context, isLeft );
+				loadPicture( imageView, context, index);
             }
         } );
 
@@ -62,7 +62,7 @@ public class PhotoManager {
 			@Override
 			public void onError() {
 				Log.d( "Picasso_ID", "" + "Problem: " + index );
-				loadPicture( imageView, photos, context, isLeft );
+				loadPicture( imageView, context, isLeft );
 			}
 		} );
 	}

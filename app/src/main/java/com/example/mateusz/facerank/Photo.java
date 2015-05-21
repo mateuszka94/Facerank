@@ -1,15 +1,14 @@
 package com.example.mateusz.facerank;
 
-import android.net.Uri;
-
 /**
  * Created by Mateusz & Grzegorz on 2015-04-26.
  */
-public class Photo {
+public class Photo implements Comparable<Photo> {
 
     private String id;
     private int votes;
 	private int appearances;
+    private float rating;
 
 	public Photo( String id ) {
 		votes = 0;
@@ -23,14 +22,18 @@ public class Photo {
 
 	public void setAppearances( int appearances ) {
 		this.appearances = appearances;
+        rating = (float)votes/(float)appearances;
 	}
 
 	public int getVotes() {
 		return votes;
 	}
 
+    public float getRating(){ return rating; }
+
 	public void setVotes( int votes ) {
 		this.votes = votes;
+        rating = (float)votes/(float)appearances;
 	}
 
 	public String getId() {
@@ -40,4 +43,15 @@ public class Photo {
 	public void setId( String id ) {
 		this.id = id;
 	}
+
+    @Override
+    public int compareTo(Photo another) {
+
+        if(this.rating > another.rating)
+            return 1;
+        else if(this.rating < another.rating)
+            return -1;
+        else
+            return 0;
+    }
 }

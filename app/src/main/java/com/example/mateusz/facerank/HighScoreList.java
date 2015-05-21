@@ -20,12 +20,16 @@ import java.util.List;
  * Created by Mateusz & Grzegorz on 2015-05-03.
  */
 public class HighScoreList extends ListFragment {
+
     OnItemSelectedListener mCallback;
-    private List<Picture> myPictures = new ArrayList<Picture>();
+    private List<Photo> myPhotos = new ArrayList<Photo>();
     ListView listView;
+    PhotoManager photoManager;
 
     private void populatePictureList(){
-        //add top 100 photos!!!
+
+        myPhotos = photoManager.getPhotos();
+
     }
 
     public interface OnItemSelectedListener{
@@ -36,6 +40,7 @@ public class HighScoreList extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         Log.d("Fragmenty", "ListFragment onCreate");
         super.onCreate(savedInstanceState);
+        photoManager = new PhotoManager();
 
         populatePictureList();
         Log.d("Fragmenty", "populatePictureList");
@@ -94,29 +99,17 @@ public class HighScoreList extends ListFragment {
 
             }
 
-            final Picture currentPicture = myPictures.get(position);
+            final Photo currentPhoto = myPhotos.get(position);
 
             Log.d("GetView", "Pozycja z getView " + position);
             //Log.d("GetView", "Aktualny RatingBar " + );
 
             //fill the view
             ImageView imageView = (ImageView) itemView.findViewById(R.id.item_image);
+            photoManager.loadPicture(imageView, getContext(), currentPhoto.getId());
+            //TODO: Asynchroniczne ładowanie zdjęć.
 
-           /* if (currentPicture.getIconID() != -1) // it means that i have to load the picture from the path
-                imageView.setImageResource(currentPicture.getIconID());
-            else {
-                Uri pictureUri = currentPicture.getPictureUri();
-
-                Bitmap myBitmap = null;
-                try {
-                    myBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), pictureUri);
-                    imageView.setImageBitmap(myBitmap);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }*/ //TODO:Zastanowić się nad identyfikowaniem zdjęć (Facebook - id użytkownika; Dowolna Strona: dokładny URL; inne)
+            //dodaj opis
 
             return itemView;
         }

@@ -58,4 +58,12 @@ public class Main extends Activity {
         photoManager.loadPicture( left, photos, getApplicationContext(), true );
 		photoManager.loadPicture( right, photos, getApplicationContext(), false );
 	}
+
+    public highScore(View view){
+
+        Intent intent = new Intent(this, HighScoreActivity.class);
+        startActivity(intent);
+
+    }
+
 }

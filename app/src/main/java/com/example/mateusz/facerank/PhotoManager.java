@@ -8,6 +8,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -19,7 +20,30 @@ public class PhotoManager {
 	private int left;
 	private int right;
 
-    public void loadPicture( final ImageView imageView, final ArrayList< Photo > photos, final Context context, final boolean isLeft ) {
+    public ArrayList<Photo> getPhotos(){
+        return photos;
+    }
+
+    public void loadPicture(ImageView imageView, Context context, int index){
+
+        final Photo photo = photos.get( index );
+        Picasso.with( context ).load( "https://graph.facebook.com/" + photo.getId() + "/picture?type=large" )
+                .resize( 40, 40 ).into( imageView, new Callback() {
+            @Override
+            public void onSuccess() {
+                Log.d( "Picasso_ID", "" + "Załadowany." );
+            }
+
+            @Override
+            public void onError() {
+                Log.d( "Picasso_ID", "" + "Problem: " + index );
+                loadPicture( imageView, photos, context, isLeft );
+            }
+        } );
+
+    }
+
+    public void loadPicture( final ImageView imageView, final Context context, final boolean isLeft ) {
 		//isLeft==true if imageView is left
 		//isLeft==right if imageView is right
 		final int index = random.nextInt( photos.size() );
@@ -61,4 +85,10 @@ public class PhotoManager {
 		else
 			right.setVotes( right.getVotes() + 1 );
 	}
+
+
+    public void sortPhotos(){
+
+        Collections.sort(photos);
+    }
 }

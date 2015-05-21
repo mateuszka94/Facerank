@@ -1,7 +1,8 @@
 package com.example.mateusz.facerank;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -12,6 +13,20 @@ public class HighScoreActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_score);
+
+        if(findViewById(R.id.fragment_container) != null){
+
+            if(getSupportFragmentManager().findFragmentByTag("FirstFragment") == null){
+                HighScoreList highScoreList = new HighScoreList();
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, highScoreList, "FirstFragment").commit();
+                Log.d("Fragmenty", "MainActivity: ");
+            }
+
+            if(savedInstanceState != null){
+                Log.d("Fragmenty", "MainActivity: savedOnstanceState not null");
+                return;
+            }
+        }
     }
 
 

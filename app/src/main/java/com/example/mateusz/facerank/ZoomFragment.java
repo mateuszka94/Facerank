@@ -3,42 +3,57 @@ package com.example.mateusz.facerank;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 /**
  * Created by Mateusz & Grzegorz on 2015-05-03.
  */
 public class ZoomFragment extends Fragment {
-    final static String ARG_POSITION = "position";
-    int mCurrentPosition = -1;
+
+    ImageView imageView;
+    PhotoManager photoManager;
+
+
+    public static ZoomFragment newInstance(int index){
+
+        ZoomFragment zoomFragment = new ZoomFragment();
+
+        Bundle args = new Bundle();
+        args.putInt("index", index);
+
+        zoomFragment.setArguments(args);
+        Log.d("Fragmenty", "ZoomFragment: Return from NewInstance");
+        return zoomFragment;
+    }
+
+    public int getShownIndex(){
+
+        return getArguments().getInt("index", 0);
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
 
-        return inflater.inflate(R.layout.zoom_layout, container, false);
-    }
+        Log.d("Fragmenty", "ZoomFragment: onCreateView");
+        //dynamically or using XML ?
+        View view =  inflater.inflate(R.layout.zoom_layout, container, false);
+        Log.d("Fragmenty", "ZoomFragment: position" + getShownIndex());
+        //ZoomFragment should contain myPicture list!
+        /*
+        * ImageView = findViewById
+        * setImage() by Uri from myPicture.get(getShownIndex())
+        * */
 
-    @Override
-    public void onStart() {
-        super.onStart();
+        imageView = (ImageView)view.findViewById(R.id.imageView);
+        photoManager.loadPicture(imageView, getActivity(), getShownIndex());
 
-        Bundle args = getArguments();
+        return view; //using XML
 
-        if(args != null){
-            //tu będą moje argumenty:
-            //pozycja, rating, ID|Uri, opis
-        }
-    }
 
-    public void updateZoomView(int position){ //tu będą przekazywane wszystkie argumenty
-        //UPDATE
-    }
-
-    @Override //in the future
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 }

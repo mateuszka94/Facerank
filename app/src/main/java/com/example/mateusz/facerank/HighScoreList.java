@@ -79,10 +79,10 @@ public class HighScoreList extends ListFragment {
         getListView().setItemChecked(position, true);
     }
 
-    private class MyListAdapter extends ArrayAdapter<Picture> {
+    private class MyListAdapter extends ArrayAdapter<Photo> {
 
         public MyListAdapter() {
-            super(getActivity().getApplicationContext(), R.layout.item_view, myPictures);
+            super(getActivity().getApplicationContext(), R.layout.item_view, myPhotos);
 
         }
 
@@ -106,7 +106,7 @@ public class HighScoreList extends ListFragment {
 
             //fill the view
             ImageView imageView = (ImageView) itemView.findViewById(R.id.item_image);
-            photoManager.loadPicture(imageView, getContext(), currentPhoto.getId());
+            photoManager.loadPicture(imageView, getContext(), position);
             //TODO: Asynchroniczne ładowanie zdjęć.
 
             //dodaj opis

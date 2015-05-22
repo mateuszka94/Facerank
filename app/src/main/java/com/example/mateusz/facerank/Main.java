@@ -16,7 +16,7 @@ import java.util.Random;
 public class Main extends Activity {
 	private Random random = new Random();
 	private ArrayList<String> ids;
-	private ArrayList<Photo> photos;
+	private ArrayList<PhotoClass> photoClasses;
 
     private ImageView right;
     private ImageView left;
@@ -33,9 +33,9 @@ public class Main extends Activity {
 
         ids = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.profile_id)));
 		Log.d("ImageView Main", "" + findViewById( R.id.leftImage ));
-		photos = new ArrayList< Photo >();
-        photoManager = new PhotoManager();
-		photoManager.createPhotos( photos, ids );
+		photoClasses = new ArrayList<PhotoClass>();
+        photoManager = PhotoManager.getInstance();
+		photoManager.createPhotos(photoClasses, ids );
 		photoManager.loadPicture( left, getApplicationContext(), true );
 		photoManager.loadPicture( right, getApplicationContext(), false );
     }

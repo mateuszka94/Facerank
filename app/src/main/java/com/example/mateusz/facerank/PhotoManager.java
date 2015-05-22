@@ -16,22 +16,34 @@ import java.util.Random;
  */
 public class PhotoManager {
     private Random random = new Random();
-	private ArrayList< Photo > photos;
+	private ArrayList<PhotoClass> photoClasses;
 	private int left;
 	private int right;
 
-    public ArrayList<Photo> getPhotos(){
-        return photos;
+    public static PhotoManager photoManager;
+
+    public static PhotoManager getInstance(){
+        Log.d("DebugMain", "singleton");
+        if(photoManager == null)
+            photoManager = new PhotoManager();
+
+        return  photoManager;
+    }
+
+    public ArrayList<PhotoClass> getPhotoClasses(){
+        Log.d("DebugMain", photoClasses.toString());
+        return photoClasses;
     }
 
     public void loadPicture(final ImageView imageView, final Context context, final int index){
+        Log.d( "DebugMain", "loadPicture" );
+        final PhotoClass photoClass = photoClasses.get( index );
 
-        final Photo photo = photos.get( index );
-        Picasso.with( context ).load( "https://graph.facebook.com/" + photo.getId() + "/picture?type=large" )
-                .resize( 40, 40 ).into( imageView, new Callback() {
+
+        Picasso.with( context ).load( "https://graph.facebook.com/" + photoClass.getId() + "/picture?type=normal" ).into( imageView, new Callback() {
             @Override
             public void onSuccess() {
-                Log.d( "Picasso_ID", "" + "Załadowany." );
+                Log.d( "DebugMain", "" + "Załadowany." );
             }
 
             @Override
@@ -40,15 +52,17 @@ public class PhotoManager {
 				loadPicture( imageView, context, index);
             }
         } );
+        Log.d( "DebugMain", "after loadPicture" );
+
 
     }
 
     public void loadPicture( final ImageView imageView, final Context context, final boolean isLeft ) {
 		//isLeft==true if imageView is left
 		//isLeft==right if imageView is right
-		final int index = random.nextInt( photos.size() );
-		final Photo photo = photos.get( index );
-		Picasso.with( context ).load( "https://graph.facebook.com/" + photo.getId() + "/picture?type=large" )
+		final int index = random.nextInt( photoClasses.size() );
+		final PhotoClass photoClass = photoClasses.get( index );
+		Picasso.with( context ).load( "https://graph.facebook.com/" + photoClass.getId() + "/picture?type=large" )
 				.resize( 160, 160 ).into( imageView, new Callback() {
 			@Override
 			public void onSuccess() {
@@ -67,17 +81,17 @@ public class PhotoManager {
 		} );
 	}
 
-	public void createPhotos( ArrayList< Photo > photos, ArrayList< String > ids ) {
-		if( !( photos.size() == 0 ) )
+	public void createPhotos( ArrayList<PhotoClass> photoClasses, ArrayList< String > ids ) {
+		if( !( photoClasses.size() == 0 ) )
 			return;
 		for( String id : ids )
-			photos.add( new Photo( id ) );
-		this.photos = photos;
+			photoClasses.add( new PhotoClass( id ) );
+		this.photoClasses = photoClasses;
 	}
 
 	public void setWinnerLoser( boolean leftWon ) {
-		Photo left = photos.get( this.left );
-		Photo right = photos.get( this.right );
+		PhotoClass left = photoClasses.get( this.left );
+		PhotoClass right = photoClasses.get( this.right );
 		left.setAppearances( left.getAppearances() + 1 );
 		right.setAppearances( right.getAppearances() + 1 );
 		if( leftWon )
@@ -86,9 +100,8 @@ public class PhotoManager {
 			right.setVotes( right.getVotes() + 1 );
 	}
 
-
     public void sortPhotos(){
 
-        Collections.sort(photos);
+        Collections.sort(photoClasses);
     }
 }

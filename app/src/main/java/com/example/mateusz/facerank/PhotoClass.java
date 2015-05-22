@@ -3,14 +3,14 @@ package com.example.mateusz.facerank;
 /**
  * Created by Mateusz & Grzegorz on 2015-04-26.
  */
-public class Photo implements Comparable<Photo> {
+public class PhotoClass implements Comparable<PhotoClass> {
 
     private String id;
     private int votes;
 	private int appearances;
     private float rating;
 
-	public Photo( String id ) {
+	public PhotoClass(String id) {
 		votes = 0;
 		appearances = 0;
 		this.id = id;
@@ -45,7 +45,7 @@ public class Photo implements Comparable<Photo> {
 	}
 
     @Override
-    public int compareTo(Photo another) {
+    public int compareTo(PhotoClass another) {
 
         if(this.rating > another.rating)
             return 1;

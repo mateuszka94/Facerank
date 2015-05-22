@@ -43,8 +43,8 @@ public class ZoomActivity extends ActionBarActivity {
 
             Log.d("Fragmenty", "ZoomActivity: getArguments");
 
-            Log.d("Fragmenty", "ZoomActivity: add fragment "+ findViewById(R.id.fragment_container));
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, zoomFragment).commit();
+            Log.d("Fragmenty", "ZoomActivity: add fragment "+ findViewById(R.id.container));
+            getSupportFragmentManager().beginTransaction().add(R.id.container, zoomFragment).commit();
 
         }
     }

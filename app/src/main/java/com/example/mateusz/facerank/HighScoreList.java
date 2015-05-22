@@ -1,6 +1,5 @@
 package com.example.mateusz.facerank;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,28 +15,81 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Mateusz & Grzegorz on 2015-05-03.
  */
 public class HighScoreList extends ListFragment {
-
     private static final int REQUEST_CODE = 100;
-
-    OnItemSelectedListener mCallback;
-    private List<Photo> myPhotos = new ArrayList<Photo>();
-    ListView listView;
-    PhotoManager photoManager;
-
-    ArrayAdapter<Photo> connectArrayToListView;
     boolean mDuelPane;
     int mCurCheckPosition = 0;
+    ArrayAdapter<PhotoClass> connectArrayToListView;
+    PhotoManager photoManager;
+
+    private ArrayList<PhotoClass> myPictures = new ArrayList<PhotoClass>();
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        Log.d("Fragmenty", "MyListFragment: OnActivityCreated");
+
+        //do the array adapter
+        if(myPictures.size() == 0)
+            populatePictureList();
+
+
+        Log.d("Fragmenty", "MyListFragment: populateList");
+
+        connectArrayToListView = new MyListAdapter();
+        Log.d("Fragmenty", "MyListFragment: createMyListadapter");
+        setListAdapter(connectArrayToListView);
+        Log.d("Fragmenty", "MyListFragment: SetListAdapter");
+
+        View zoomFragment = getActivity().findViewById(R.id.zoom_fragment);
+
+        mDuelPane = zoomFragment != null && zoomFragment.getVisibility() == View.VISIBLE;
+
+        if(savedInstanceState != null){
+            mCurCheckPosition = savedInstanceState.getInt("curChoice", 0);
+        }
+
+        if(mDuelPane){
+            getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            showPicture(mCurCheckPosition);
+        }
+
+        Log.d("Fragmenty", "MyListFragment: End of ActivityCreated");
+    }
 
     private void populatePictureList(){
+        //myPictures.add(PhotoManager.getInstance().getPhotoClasses().get(0)); // =  PhotoManager.getInstance().getPhotoClasses(); nie mogę tak kopiować zdjęć
+        //myPictures.add(new PhotoClass("12341515"));
+        //Log.d("DebugMain", PhotoManager.getInstance().getPhotoClasses()+"");
+        //PhotoManager.getInstance();
+        myPictures.addAll(PhotoManager.getInstance().getPhotoClasses());
+    }
 
-        myPhotos = photoManager.getPhotos();
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d("Fragmenty", "MyListFragment: onSaveInstance");
+        outState.putInt("curChoice", mCurCheckPosition);
+    }
 
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Log.d("Fragmenty", "MyListFragment: onListItemClick "+ mDuelPane);
+        showPicture(position);
+        //connectArrayToListView.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        connectArrayToListView.notifyDataSetChanged();
     }
 
     void showPicture(int index){
@@ -81,6 +133,8 @@ public class HighScoreList extends ListFragment {
             intent.setClass(getActivity(), ZoomActivity.class);
 
             intent.putExtra("index", index);
+
+
             startActivityForResult(intent, REQUEST_CODE);
 
 
@@ -88,88 +142,12 @@ public class HighScoreList extends ListFragment {
 
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        Log.d("Fragmenty", "MyListFragment: OnActivityCreated");
-
-        //do the array adapter
-        if(myPhotos.size() == 0)
-            populatePictureList();
-
-        connectArrayToListView = new MyListAdapter();
-        setListAdapter(connectArrayToListView);
-
-        Log.d("Fragmenty", "MyListFragment: SetListAdapter");
-
-        View zoomFragment = getActivity().findViewById(R.id.zoom_fragment);
-
-        mDuelPane = zoomFragment != null && zoomFragment.getVisibility() == View.VISIBLE;
-
-        if(savedInstanceState != null){
-            mCurCheckPosition = savedInstanceState.getInt("curChoice", 0);
-        }
-
-        if(mDuelPane){
-            getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            showPicture(mCurCheckPosition);
-        }
-
-        Log.d("Fragmenty", "MyListFragment: End of ActivityCreated");
-    }
-
-    public interface OnItemSelectedListener{
-        public void onItemSelected(int position);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        Log.d("Fragmenty", "ListFragment onCreate");
-        super.onCreate(savedInstanceState);
-        photoManager = new PhotoManager();
-
-        populatePictureList();
-        Log.d("Fragmenty", "populatePictureList");
-
-        setListAdapter(new MyListAdapter());
-
-        Log.d("Fragmenty", "set Adapter");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        if(getFragmentManager().findFragmentById(R.id.list_fragment) != null){
-            getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        try{
-            mCallback = (OnItemSelectedListener)activity;
-
-        }catch(ClassCastException e){
-            throw new ClassCastException(activity.toString() + " must implement OnItemSelectedListener");
-        }
-    }
-
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-        mCallback.onItemSelected(position);
-
-        getListView().setItemChecked(position, true);
-    }
-
-    private class MyListAdapter extends ArrayAdapter<Photo> {
+    //Override ArrayAdapter, in layout i have a item_list layout and more :D
+    private class MyListAdapter extends ArrayAdapter<PhotoClass> {
 
         public MyListAdapter() {
-            super(getActivity().getApplicationContext(), R.layout.item_view, myPhotos);
+            super(getActivity().getApplicationContext(), R.layout.item_view, myPictures);
+            Log.d("DebugMain", "Constructor of MyListAdapter");
 
         }
 
@@ -186,21 +164,21 @@ public class HighScoreList extends ListFragment {
 
             }
 
-            final Photo currentPhoto = myPhotos.get(position);
+            final PhotoClass currentPicture = myPictures.get(position);
 
-            Log.d("GetView", "Pozycja z getView " + position);
+
+            Log.d("DebugMain", "Pozycja z getView " + position);
             //Log.d("GetView", "Aktualny RatingBar " + );
 
             //fill the view
             ImageView imageView = (ImageView) itemView.findViewById(R.id.item_image);
-            photoManager.loadPicture(imageView, getContext(), position);
-            //TODO: Asynchroniczne ładowanie zdjęć.
+            photoManager.getInstance().loadPicture(imageView, getActivity().getApplicationContext(), position); //problem z ładowaniem zdjęcia
 
-            //dodaj opis
 
             return itemView;
         }
 
 
     }
+
 }

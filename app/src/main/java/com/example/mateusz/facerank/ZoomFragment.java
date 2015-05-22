@@ -50,7 +50,7 @@ public class ZoomFragment extends Fragment {
         * */
 
         imageView = (ImageView)view.findViewById(R.id.imageView);
-        photoManager.loadPicture(imageView, getActivity(), getShownIndex());
+        photoManager.getInstance().loadPicture(imageView, getActivity(), getShownIndex());
 
         return view; //using XML
 

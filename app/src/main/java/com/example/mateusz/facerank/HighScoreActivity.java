@@ -1,25 +1,39 @@
 package com.example.mateusz.facerank;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
 
 public class HighScoreActivity extends ActionBarActivity {
 
+    HighScoreList myListFragment;
+
+    private static final int REQUEST_CODE = 100;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE && resultCode == RESULT_OK){
+            //connectArrayToListView.notifyDataSetChanged();
+            //((ArrayAdapter)myListFragment.getListAdapter()).notifyDataSetChanged();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("Fragmenty", "MainActivity: OnCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_score);
+        Log.d("Fragmenty", "MainActivity: setContent");
 
-        if(findViewById(R.id.fragment_container) != null){
+        if(findViewById(R.id.container) != null){
 
             if(getSupportFragmentManager().findFragmentByTag("FirstFragment") == null){
-                HighScoreList highScoreList = new HighScoreList();
-                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, highScoreList, "FirstFragment").commit();
-                Log.d("Fragmenty", "MainActivity: ");
+                myListFragment = new HighScoreList();
+                getSupportFragmentManager().beginTransaction().add(R.id.container, myListFragment, "FirstFragment").commit();
+                Log.d("Fragmenty", "MainActivity: Create myListFragment");
             }
 
             if(savedInstanceState != null){
@@ -27,28 +41,16 @@ public class HighScoreActivity extends ActionBarActivity {
                 return;
             }
         }
+
+        /*if(findViewById(R.id.zoom_fragment) == null || (findViewById(R.id.zoom_fragment).getVisibility() != View.VISIBLE)){
+            if(findViewById(R.id.container) != null){
+            myListFragment = new MyListFragment();
+
+            getSupportFragmentManager().beginTransaction().add(R.id.container, myListFragment).commit();
+            Log.d("Fragmenty", "set first fragment");
+            }
+        }*/
+
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_high_score, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

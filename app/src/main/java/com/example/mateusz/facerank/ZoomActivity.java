@@ -2,34 +2,20 @@ package com.example.mateusz.facerank;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 /**
  * Created by Mateusz on 2015-05-21.
  */
-public class ZoomActivity extends ActionBarActivity {
+public class ZoomActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_high_score);
         Log.d("Fragmenty", "ZoomActivity: OnCreate");
-
-        /*ratingBar = (RatingBar)findViewById(R.id.ratingBar2);
-        Log.d("Fragmenty", "ZoomActivity: OnCreate "+ ratingBar);
-
-        if(ratingBar != null){
-            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                @Override
-                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser){
-                    MyListFragment.myPictures.get(getShownIndex()).setRating(rating);
-                    setResult(RESULT_OK);
-                    finish();
-                }
-            });
-        }*/
 
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
             finish();

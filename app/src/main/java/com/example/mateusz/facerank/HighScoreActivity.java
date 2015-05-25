@@ -2,11 +2,11 @@ package com.example.mateusz.facerank;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 
-public class HighScoreActivity extends ActionBarActivity {
+public class HighScoreActivity extends FragmentActivity {
 
     HighScoreList myListFragment;
 

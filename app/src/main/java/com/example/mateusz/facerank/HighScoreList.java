@@ -1,7 +1,6 @@
 package com.example.mateusz.facerank;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -95,6 +94,7 @@ public class HighScoreList extends ListFragment {
     void showPicture(int index){
         mCurCheckPosition = index;
         ZoomFragment zoomFragment = (ZoomFragment)getFragmentManager().findFragmentById(R.id.zoom_fragment);
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
         if(mDuelPane){
             getListView().setItemChecked(index, true);
@@ -108,8 +108,6 @@ public class HighScoreList extends ListFragment {
                 Log.d("Fragmenty", "MyListFragment: New Instance of ZoomFragment");
                 zoomFragment = ZoomFragment.newInstance(index);
 
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-
                 fragmentTransaction.replace(R.id.zoom_fragment, zoomFragment);
                 Log.d("Fragmenty", "MyListFragment: Replace zoom_fragment");
                 fragmentTransaction.commit();
@@ -117,25 +115,28 @@ public class HighScoreList extends ListFragment {
 
             } else {
                 Log.d("Fragmenty", "MyListFragment: I am in Portrait mode");
-                Intent intent = new Intent();
+                /*Intent intent = new Intent();
 
                 intent.setClass(getActivity(), ZoomActivity.class);
 
                 intent.putExtra("index", index);
-                startActivityForResult(intent, REQUEST_CODE);
+                startActivityForResult(intent, REQUEST_CODE);*/
+
+                if(zoomFragment != null || zoomFragment.getShownIndex() != index)
+                    zoomFragment = ZoomFragment.newInstance(index);
+
+                Log.d("Fragmenty", "MyListFragment: before replacing 1");
+                fragmentTransaction.replace(R.id.container, zoomFragment).commit();
 
             }
         }else {
 
             Log.d("Fragmenty", "MyListFragment: I am in Portrait mode");
-            Intent intent = new Intent();
+            //if(zoomFragment != null || zoomFragment.getShownIndex() != index)
+                zoomFragment = ZoomFragment.newInstance(index);
 
-            intent.setClass(getActivity(), ZoomActivity.class);
-
-            intent.putExtra("index", index);
-
-
-            startActivityForResult(intent, REQUEST_CODE);
+            Log.d("Fragmenty", "MyListFragment: before replacing");
+            fragmentTransaction.replace(R.id.container, zoomFragment).commit();
 
 
         }
@@ -172,7 +173,7 @@ public class HighScoreList extends ListFragment {
 
             //fill the view
             ImageView imageView = (ImageView) itemView.findViewById(R.id.item_image);
-            photoManager.getInstance().loadPicture(imageView, getActivity().getApplicationContext(), position); //problem z ładowaniem zdjęcia
+            photoManager.getInstance().loadPictureN(imageView, getActivity().getApplicationContext(), position, "normal"); //problem z ładowaniem zdjęcia
 
 
             return itemView;

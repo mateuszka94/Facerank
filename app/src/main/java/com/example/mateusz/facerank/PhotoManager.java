@@ -35,12 +35,12 @@ public class PhotoManager {
         return photoClasses;
     }
 
-    public void loadPicture(final ImageView imageView, final Context context, final int index){
+    public void loadPictureN(final ImageView imageView, final Context context, final int index, final String type){
         Log.d( "DebugMain", "loadPicture" );
         final PhotoClass photoClass = photoClasses.get( index );
 
 
-        Picasso.with( context ).load( "https://graph.facebook.com/" + photoClass.getId() + "/picture?type=normal" ).into( imageView, new Callback() {
+        Picasso.with( context ).load( "https://graph.facebook.com/" + photoClass.getId() + "/picture?type="+type ).into( imageView, new Callback() {
             @Override
             public void onSuccess() {
                 Log.d( "DebugMain", "" + "Załadowany." );
@@ -49,7 +49,7 @@ public class PhotoManager {
             @Override
             public void onError() {
                 Log.d( "Picasso_ID", "" + "Problem: " + index );
-				loadPicture( imageView, context, index);
+				loadPictureN( imageView, context, index, type);
             }
         } );
         Log.d( "DebugMain", "after loadPicture" );

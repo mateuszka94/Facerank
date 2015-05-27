@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * Created by Mateusz & Grzegorz on 2015-05-03.
@@ -15,7 +16,7 @@ import android.widget.ImageView;
 public class ZoomFragment extends Fragment {
 
     ImageView imageView;
-    PhotoManager photoManager;
+    TextView textView;
 
 
     public static ZoomFragment newInstance(int index){
@@ -50,10 +51,11 @@ public class ZoomFragment extends Fragment {
         * */
 
         imageView = (ImageView)view.findViewById(R.id.imageView);
-        photoManager.getInstance().loadPictureN(imageView, getActivity(), getShownIndex(), "large");
+        PhotoManager.getInstance().loadPictureN(imageView, getActivity(), getShownIndex(), "large");
 
         return view; //using XML
 
 
     }
+
 }

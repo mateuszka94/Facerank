@@ -56,11 +56,13 @@ public class Main extends Activity {
 			photoManager.setWinnerLoser( true );
 		else
 			photoManager.setWinnerLoser( false );
-        photoManager.loadPicture( left, getApplicationContext(), true );
-		photoManager.loadPicture( right, getApplicationContext(), false );
+            photoManager.loadPicture( left, getApplicationContext(), true );
+		    photoManager.loadPicture( right, getApplicationContext(), false );
+        //TODO:raz na jakiś czas zdarza się wylosowanie tych samych zdjęć (po lewej i prawej stronie)
 	}
 
     public void highScore(View view){
+        PhotoManager.getInstance().sortPhotos();
         Intent intent = new Intent(this, HighScoreActivity.class);
         startActivity(intent);
     }

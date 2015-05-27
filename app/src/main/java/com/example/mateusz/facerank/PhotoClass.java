@@ -48,9 +48,9 @@ public class PhotoClass implements Comparable<PhotoClass> {
     public int compareTo(PhotoClass another) {
 
         if(this.rating > another.rating)
-            return 1;
-        else if(this.rating < another.rating)
             return -1;
+        else if(this.rating < another.rating)
+            return 1;
         else
             return 0;
     }

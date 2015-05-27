@@ -30,6 +30,12 @@ public class PhotoManager {
         return  photoManager;
     }
 
+    public PhotoClass getPhotoByPosition(int position){
+
+        return photoClasses.get(position);
+
+    }
+
     public ArrayList<PhotoClass> getPhotoClasses(){
         Log.d("DebugMain", photoClasses.toString());
         return photoClasses;
@@ -101,7 +107,6 @@ public class PhotoManager {
 	}
 
     public void sortPhotos(){
-
         Collections.sort(photoClasses);
     }
 }

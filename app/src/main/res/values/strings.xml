@@ -6,6 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_high_score">HighScoreActivity</string>
     <string name="facebook_app_id">774750135973852</string>
+	<string name="highScores">High Scores</string>
 
     <string-array name="profile_id">
 		<item>337800042</item>

@@ -2,7 +2,9 @@ package com.example.mateusz.facerank;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -41,7 +43,7 @@ public class PhotoManager {
         return photoClasses;
     }
 
-    public void loadPictureN(final ImageView imageView, final Context context, final int index, final String type){
+    public void loadPictureN(final ImageView imageView, final ProgressBar progressBar, final Context context, final int index, final String type){
         Log.d( "DebugMain", "loadPicture" );
         final PhotoClass photoClass = photoClasses.get( index );
 
@@ -50,12 +52,13 @@ public class PhotoManager {
             @Override
             public void onSuccess() {
                 Log.d( "DebugMain", "" + "Załadowany." );
+				progressBar.setVisibility( View.INVISIBLE );
             }
 
             @Override
             public void onError() {
                 Log.d( "Picasso_ID", "" + "Problem: " + index );
-				loadPictureN( imageView, context, index, type);
+				loadPictureN( imageView, progressBar, context, index, type );
             }
         } );
         Log.d( "DebugMain", "after loadPicture" );
@@ -63,7 +66,7 @@ public class PhotoManager {
 
     }
 
-    public void loadPicture( final ImageView imageView, final Context context, final boolean isLeft ) {
+    public void loadPicture( final ImageView imageView, final ProgressBar progressBar, final Context context, final boolean isLeft ) {
 		//isLeft==true if imageView is left
 		//isLeft==right if imageView is right
 		final int index = random.nextInt( photoClasses.size() );
@@ -73,6 +76,8 @@ public class PhotoManager {
 			@Override
 			public void onSuccess() {
 				Log.d( "Picasso_ID", "" + "Załadowany." );
+				imageView.setVisibility( View.VISIBLE );
+				progressBar.setVisibility( View.INVISIBLE );
 				if( isLeft )
 					left = index;
 				else
@@ -82,7 +87,7 @@ public class PhotoManager {
 			@Override
 			public void onError() {
 				Log.d( "Picasso_ID", "" + "Problem: " + index );
-				loadPicture( imageView, context, isLeft );
+				loadPicture( imageView, progressBar, context, isLeft );
 			}
 		} );
 	}

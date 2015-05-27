@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
@@ -125,7 +126,7 @@ public class HighScoreList extends ListFragment {
                 if(zoomFragment != null || zoomFragment.getShownIndex() != index)
                     zoomFragment = ZoomFragment.newInstance(index);
 
-                Log.d("Fragmenty", "MyListFragment: before replacing 1");
+                Log.d( "Fragmenty", "MyListFragment: before replacing 1" );
                 fragmentTransaction.replace(R.id.container, zoomFragment).commit();
 
             }
@@ -135,7 +136,7 @@ public class HighScoreList extends ListFragment {
             //if(zoomFragment != null || zoomFragment.getShownIndex() != index)
                 zoomFragment = ZoomFragment.newInstance(index);
 
-            Log.d("Fragmenty", "MyListFragment: before replacing");
+            Log.d( "Fragmenty", "MyListFragment: before replacing" );
             fragmentTransaction.replace(R.id.container, zoomFragment).commit();
 
 
@@ -173,7 +174,9 @@ public class HighScoreList extends ListFragment {
 
             //fill the view
             ImageView imageView = (ImageView) itemView.findViewById(R.id.item_image);
-            photoManager.getInstance().loadPictureN(imageView, getActivity().getApplicationContext(), position, "normal"); //problem z ładowaniem zdjęcia
+			ProgressBar progressBar = ( ProgressBar ) itemView.findViewById( R.id.progress );
+			progressBar.setVisibility( View.VISIBLE );
+            photoManager.getInstance().loadPictureN( imageView, progressBar, getActivity().getApplicationContext(), position, "normal" ); //problem z ładowaniem zdjęcia
 
 
             return itemView;

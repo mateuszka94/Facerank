@@ -1,36 +1,68 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" tools:context=".Main" android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:gravity="center|center_horizontal">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				xmlns:tools="http://schemas.android.com/tools" tools:context=".Main"
+				android:layout_height="match_parent"
+				android:layout_width="match_parent"
+				android:orientation="horizontal"
+				android:gravity="center|center_horizontal">
 
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/leftImage"
-        android:layout_gravity="start|center_vertical"
-        android:minHeight="160dp"
-        android:minWidth="160dp"
-        android:onClick="onClick" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_gravity="bottom"
-        android:onClick="highScore"/>
-
-    <ImageView
+	<RelativeLayout
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:id="@+id/rightImage"
-		android:layout_gravity="center_vertical"
-		android:minHeight="160dp"
-		android:minWidth="160dp"
-		android:onClick="onClick" />
+		android:layout_above="@+id/button"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentStart="true">
 
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/leftImage"
+			android:layout_gravity="start|center_vertical"
+			android:minHeight="@dimen/mainImageSize"
+			android:minWidth="@dimen/mainImageSize"
+			android:onClick="onClick" />
 
-</LinearLayout>
+		<ProgressBar
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:id="@+id/leftProgress"
+			style="@android:style/Widget.ProgressBar.Small"/>
+
+	</RelativeLayout>
+
+	<Button
+		style="?android:attr/buttonStyleSmall"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/highScores"
+		android:id="@+id/button"
+		android:onClick="highScore"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"/>
+
+	<RelativeLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_above="@+id/button"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentEnd="true">
+
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/rightImage"
+			android:layout_gravity="end|center_vertical"
+			android:minHeight="@dimen/mainImageSize"
+			android:minWidth="@dimen/mainImageSize"
+			android:onClick="onClick" />
+
+		<ProgressBar
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:id="@+id/rightProgress"
+			style="@android:style/Widget.ProgressBar.Small"/>
+
+	</RelativeLayout>
+
+</RelativeLayout>

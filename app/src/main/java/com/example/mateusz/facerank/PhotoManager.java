@@ -1,10 +1,12 @@
 package com.example.mateusz.facerank;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -17,18 +19,28 @@ import java.util.Random;
  * Created by Mateusz & Grzegorz on 2015-04-26.
  */
 public class PhotoManager {
+
     private Random random = new Random();
 	private ArrayList<PhotoClass> photoClasses;
 	private int left;
 	private int right;
+    public MySQLiteHelper myDatabase;
 
     public static PhotoManager photoManager;
 
-    public static PhotoManager getInstance(){
+    public static PhotoManager getInstance(Context context){
         Log.d("DebugMain", "singleton");
-        if(photoManager == null)
+        if(photoManager == null) {
             photoManager = new PhotoManager();
+            photoManager.myDatabase = new MySQLiteHelper(context);
 
+            //Log.d("MultiObject", photoManager.myDatabase.synchronize().size()+"");
+
+            photoManager.photoClasses = photoManager.myDatabase.synchronize(); //dodaj tylko te, które nie istnieją :D
+            Toast.makeText(context,"PhotoManager Created", Toast.LENGTH_LONG).show();
+        }
+
+        //Log.d("MultiObject", photoManager.myDatabase.synchronize().size()+"");
         return  photoManager;
     }
 
@@ -92,23 +104,44 @@ public class PhotoManager {
 		} );
 	}
 
-	public void createPhotos( ArrayList<PhotoClass> photoClasses, ArrayList< String > ids ) {
-		if( !( photoClasses.size() == 0 ) )
-			return;
-		for( String id : ids )
-			photoClasses.add( new PhotoClass( id ) );
+    private boolean idExists(String id){
+
+        for(PhotoClass pc : photoClasses)
+            if(id.equals(pc.getId()))
+                return true;
+
+
+        return false;
+
+    }
+
+	public void createPhotos( ArrayList< String > ids ) { //how to do it ?!
+
+        for(String id : ids)
+            if(!idExists(id))
+                photoClasses.add(new PhotoClass(id));
+
+
 		this.photoClasses = photoClasses;
 	}
 
 	public void setWinnerLoser( boolean leftWon ) {
 		PhotoClass left = photoClasses.get( this.left );
 		PhotoClass right = photoClasses.get( this.right );
-		left.setAppearances( left.getAppearances() + 1 );
+
+        left.setAppearances( left.getAppearances() + 1 );
 		right.setAppearances( right.getAppearances() + 1 );
-		if( leftWon )
+
+		if( leftWon ){
 			left.setVotes( left.getVotes() + 1 );
-		else
+            myDatabase.insert(left.getId(), left.getAppearances(), left.getVotes(), left.getRating());
+            myDatabase.insert(right.getId(), right.getAppearances(), right.getVotes(), right.getRating());
+        }
+		else {
 			right.setVotes( right.getVotes() + 1 );
+            myDatabase.insert(right.getId(), right.getAppearances(), right.getVotes(), right.getRating());
+            myDatabase.insert(left.getId(), left.getAppearances(), left.getVotes(), left.getRating());
+        }
 	}
 
     public void sortPhotos(){

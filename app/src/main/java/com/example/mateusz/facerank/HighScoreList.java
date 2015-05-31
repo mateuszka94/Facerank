@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -51,7 +52,7 @@ public class HighScoreList extends ListFragment {
         mDuelPane = zoomFragment != null && zoomFragment.getVisibility() == View.VISIBLE;
 
         if(savedInstanceState != null){
-            mCurCheckPosition = savedInstanceState.getInt("curChoice", 0);
+            mCurCheckPosition = savedInstanceState.getInt("curChoice", 0); //rozwiązać sytuację z zaznaczonym zdjęciem TODO:mateusz
         }
 
         if(mDuelPane){
@@ -67,7 +68,7 @@ public class HighScoreList extends ListFragment {
         //myPictures.add(new PhotoClass("12341515"));
         //Log.d("DebugMain", PhotoManager.getInstance().getPhotoClasses()+"");
         //PhotoManager.getInstance();
-        myPictures.addAll(PhotoManager.getInstance().getPhotoClasses());
+        myPictures.addAll(PhotoManager.getInstance(getActivity().getApplicationContext()).getPhotoClasses());
     }
 
     @Override
@@ -176,10 +177,10 @@ public class HighScoreList extends ListFragment {
             ImageView imageView = (ImageView) itemView.findViewById(R.id.item_image);
 			ProgressBar progressBar = ( ProgressBar ) itemView.findViewById( R.id.progress );
 			progressBar.setVisibility( View.VISIBLE );
-            photoManager.getInstance().loadPictureN( imageView, progressBar, getActivity().getApplicationContext(), position, "normal" ); //problem z ładowaniem zdjęcia
+            photoManager.getInstance(getContext()).loadPictureN(imageView, progressBar, getActivity().getApplicationContext(), position, "normal"); //problem z ładowaniem zdjęcia
 
             TextView textView = (TextView)itemView.findViewById(R.id.item_text);
-            textView.setText(photoManager.getInstance().getPhotoByPosition(position).getRating()*100+"%");
+            textView.setText(photoManager.getInstance(getContext()).getPhotoByPosition(position).getRating()*100+"%");
 
             return itemView;
         }

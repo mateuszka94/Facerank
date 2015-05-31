@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 /**
  * Created by Mateusz & Grzegorz on 2015-05-03.
@@ -15,7 +16,7 @@ import android.widget.ImageView;
 public class ZoomFragment extends Fragment {
 
     ImageView imageView;
-    TextView textView;
+    PhotoManager photoManager;
 
 
     public static ZoomFragment newInstance(int index){
@@ -49,10 +50,10 @@ public class ZoomFragment extends Fragment {
         * setImage() by Uri from myPicture.get(getShownIndex())
         * */
 
-        imageView = (ImageView)view.findViewById(R.id.imageView);
-        PhotoManager.getInstance().loadPictureN(imageView, getActivity(), getShownIndex(), "large");
         imageView = (ImageView) view.findViewById(R.id.imageView);
-		
+		ProgressBar progressBar = ( ProgressBar ) view.findViewById( R.id.progress );
+        photoManager.getInstance(getActivity().getApplicationContext()).loadPictureN( imageView, progressBar, getActivity(), getShownIndex(), "large" );
+
         return view; //using XML
 
 

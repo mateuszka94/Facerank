@@ -3,12 +3,20 @@
 				android:layout_height="match_parent"
 				android:layout_width="match_parent"
 				android:orientation="horizontal"
-				android:layout_margin="@dimen/activity_horizontal_margin"
+				android:background="#F0FFFF"
 				android:gravity="center|center_horizontal">
+
+	<ImageView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerInParent="true"
+		android:id="@+id/versus"
+		android:src="@drawable/versus"/>
 
 	<RelativeLayout
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/activity_horizontal_margin"
 		android:layout_above="@+id/button"
 		android:layout_alignParentLeft="true"
 		android:layout_alignParentStart="true">
@@ -17,7 +25,6 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:id="@+id/leftImage"
-			android:layout_gravity="start|center_vertical"
 			android:minHeight="@dimen/mainImageSize"
 			android:minWidth="@dimen/mainImageSize"
 			android:onClick="onClick" />
@@ -31,6 +38,31 @@
 
 	</RelativeLayout>
 
+	<RelativeLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/activity_horizontal_margin"
+		android:layout_above="@+id/button"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentEnd="true">
+
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/rightImage"
+			android:minHeight="@dimen/mainImageSize"
+			android:minWidth="@dimen/mainImageSize"
+			android:onClick="onClick" />
+
+		<ProgressBar
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/rightProgress"
+			style="@android:style/Widget.ProgressBar.Small"
+			android:layout_centerInParent="true"/>
+
+	</RelativeLayout>
+
 	<Button
 		style="?android:attr/buttonStyleSmall"
 		android:layout_width="wrap_content"
@@ -40,30 +72,5 @@
 		android:onClick="highScore"
 		android:layout_alignParentBottom="true"
 		android:layout_centerHorizontal="true"/>
-
-	<RelativeLayout
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_above="@+id/button"
-		android:layout_alignParentRight="true"
-		android:layout_alignParentEnd="true">
-
-		<ImageView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:id="@+id/rightImage"
-			android:layout_gravity="end|center_vertical"
-			android:minHeight="@dimen/mainImageSize"
-			android:minWidth="@dimen/mainImageSize"
-			android:onClick="onClick" />
-
-		<ProgressBar
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_centerInParent="true"
-			android:id="@+id/rightProgress"
-			style="@android:style/Widget.ProgressBar.Small"/>
-
-	</RelativeLayout>
 
 </RelativeLayout>

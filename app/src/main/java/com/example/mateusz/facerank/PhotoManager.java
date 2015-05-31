@@ -67,24 +67,15 @@ public class PhotoManager {
 				loadPicture( imageView, progressBar, context, index, type );
             }
         } );
-
-
-
     }
 
     public void loadPicture( final ImageView imageView, final ProgressBar progressBar, final Context context, final boolean isLeft ) {
 
 		final int index = random.nextInt( photoClasses.size() );
 		final PhotoClass photoClass = photoClasses.get( index );
-
         new WebManager(imageView, progressBar).execute("https://graph.facebook.com/" + photoClass.getId() + "/picture?type=large");
 
-        if( isLeft )
-            left = index;
-        else
-            right = index;
-
-		/*Picasso.with( context ).load( "https://graph.facebook.com/" + photoClass.getId() + "/picture?type=large" )
+		Picasso.with( context ).load( "https://graph.facebook.com/" + photoClass.getId() + "/picture?type=large" )
 				.resize( 160, 160 ).into( imageView, new Callback() {
 			@Override
 			public void onSuccess() {
@@ -102,15 +93,14 @@ public class PhotoManager {
 				Log.d( "Picasso_ID", "" + "Problem: " + index );
 				loadPicture( imageView, progressBar, context, isLeft );
 			}
-		} );*/
+		} );
 	}
 
-    private boolean idExists(String id){
+    private boolean idExists(String id) {
 
         for(PhotoClass pc : photoClasses)
             if(id.equals(pc.getId()))
                 return true;
-
 
         return false;
 

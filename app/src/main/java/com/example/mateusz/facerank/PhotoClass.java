@@ -52,9 +52,11 @@ public class PhotoClass implements Comparable<PhotoClass> {
         else if(this.rating < another.rating)
             return 1;
         else if(this.appearances > another.appearances)
-                return  -1;
-            else
-                return  1;
+            return -1;
+		else if( this.appearances < another.appearances )
+			return 1;
+        else
+            return 0;
 
     }
 }

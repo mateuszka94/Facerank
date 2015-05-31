@@ -12,8 +12,8 @@
 		android:layout_centerHorizontal="true"
 		android:layout_above="@+id/button"
 		android:id="@+id/versus"
-		android:maxHeight="100dp"
-		android:maxWidth="100dp"
+		android:maxHeight="120dp"
+		android:maxWidth="120dp"
 		android:src="@drawable/versus"/>
 
 	<RelativeLayout

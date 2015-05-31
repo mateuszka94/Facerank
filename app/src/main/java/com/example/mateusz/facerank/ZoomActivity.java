@@ -1,6 +1,5 @@
 package com.example.mateusz.facerank;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -13,19 +12,19 @@ public class ZoomActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_high_score);
         Log.d("Fragmenty", "ZoomActivity: OnCreate");
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.zoom_activity);
 
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+        /*if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
             finish();
             return;
-        }
+        }*/
 
         if(savedInstanceState == null){
-            ZoomFragment zoomFragment = new ZoomFragment();
+            ZoomFragment zoomFragment = ZoomFragment.newInstance(getIntent().getIntExtra("index", 0));
 
-            zoomFragment.setArguments(getIntent().getExtras());
+            //zoomFragment.setArguments(getIntent().getExtras());
 
             Log.d("Fragmenty", "ZoomActivity: getArguments");
 

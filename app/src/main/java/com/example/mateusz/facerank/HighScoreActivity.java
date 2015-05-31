@@ -1,6 +1,5 @@
 package com.example.mateusz.facerank;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -9,17 +8,6 @@ import android.util.Log;
 public class HighScoreActivity extends FragmentActivity {
 
     HighScoreList myListFragment;
-
-    private static final int REQUEST_CODE = 100;
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE && resultCode == RESULT_OK){
-            //connectArrayToListView.notifyDataSetChanged();
-            //((ArrayAdapter)myListFragment.getListAdapter()).notifyDataSetChanged();
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +28,7 @@ public class HighScoreActivity extends FragmentActivity {
                 Log.d("Fragmenty", "MainActivity: savedOnstanceState not null");
                 return;
             }
+
         }
 
         /*if(findViewById(R.id.zoom_fragment) == null || (findViewById(R.id.zoom_fragment).getVisibility() != View.VISIBLE)){

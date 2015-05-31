@@ -25,6 +25,11 @@
             android:name=".HighScoreActivity"
             android:label="@string/title_activity_high_score" >
         </activity>
+
+    <activity
+        android:name=".ZoomActivity"
+        android:label="@string/title_activity_zoom" >
+    </activity>
     </application>
 
 </manifest>

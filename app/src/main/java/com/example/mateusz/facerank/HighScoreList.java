@@ -1,6 +1,7 @@
 package com.example.mateusz.facerank;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -64,10 +65,6 @@ public class HighScoreList extends ListFragment {
     }
 
     private void populatePictureList(){
-        //myPictures.add(PhotoManager.getInstance().getPhotoClasses().get(0)); // =  PhotoManager.getInstance().getPhotoClasses(); nie mogę tak kopiować zdjęć
-        //myPictures.add(new PhotoClass("12341515"));
-        //Log.d("DebugMain", PhotoManager.getInstance().getPhotoClasses()+"");
-        //PhotoManager.getInstance();
         myPictures.addAll(PhotoManager.getInstance(getActivity().getApplicationContext()).getPhotoClasses());
     }
 
@@ -123,22 +120,26 @@ public class HighScoreList extends ListFragment {
 
                 intent.putExtra("index", index);
                 startActivityForResult(intent, REQUEST_CODE);*/
-
-                if(zoomFragment != null || zoomFragment.getShownIndex() != index)
-                    zoomFragment = ZoomFragment.newInstance(index);
-
-                Log.d("Fragmenty", "MyListFragment: before replacing 1");
-                fragmentTransaction.replace(R.id.container, zoomFragment).commit();
+                fragmentTransaction.replace(R.id.zoom_fragment, zoomFragment);
 
             }
         }else {
 
-            Log.d("Fragmenty", "MyListFragment: I am in Portrait mode");
-            //if(zoomFragment != null || zoomFragment.getShownIndex() != index)
+            /*Log.d("Fragmenty", "MyListFragment: I am in Portrait mode");
+            if(zoomFragment != null || zoomFragment.getShownIndex() != index)
                 zoomFragment = ZoomFragment.newInstance(index);
 
             Log.d("Fragmenty", "MyListFragment: before replacing");
-            fragmentTransaction.replace(R.id.container, zoomFragment).commit();
+            fragmentTransaction.replace(R.id.container, zoomFragment).commit();*/
+
+            Log.d("Fragmenty", "MyListFragment: I am in Portrait mode");
+            Intent intent = new Intent(getActivity().getApplicationContext(), ZoomActivity.class);
+            //intent.setClass(getActivity().getApplicationContext(), ZoomActivity.class);
+            Log.d("Fragmenty", "MyListFragment: After setting class");
+            intent.putExtra("index", index);
+            getActivity().startActivity(intent);
+            Log.d("Fragmenty", "MyListFragment: After starting new class");
+
 
 
         }

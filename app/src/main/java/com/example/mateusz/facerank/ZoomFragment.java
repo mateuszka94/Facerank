@@ -44,17 +44,12 @@ public class ZoomFragment extends Fragment {
         //dynamically or using XML ?
         View view =  inflater.inflate(R.layout.zoom_layout, container, false);
         Log.d("Fragmenty", "ZoomFragment: position" + getShownIndex());
-        //ZoomFragment should contain myPicture list!
-        /*
-        * ImageView = findViewById
-        * setImage() by Uri from myPicture.get(getShownIndex())
-        * */
 
         imageView = (ImageView) view.findViewById(R.id.imageView);
 		ProgressBar progressBar = ( ProgressBar ) view.findViewById( R.id.progress );
         photoManager.getInstance(getActivity().getApplicationContext()).loadPictureN( imageView, progressBar, getActivity(), getShownIndex(), "large" );
 
-        return view; //using XML
+        return view;
 
 
     }

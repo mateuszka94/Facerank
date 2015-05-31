@@ -60,6 +60,7 @@ public class Main extends Activity {
 
 		photoManager.loadPicture( left, leftProgress, getApplicationContext(), true );
 		photoManager.loadPicture( right, rightProgress, getApplicationContext(), false );
+
     }
 
     @Override

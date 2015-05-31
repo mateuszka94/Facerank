@@ -108,13 +108,10 @@ public class MySQLiteHelper{
         public MySQLiteHelperInner(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
             this.context = context;
-            Toast.makeText(context,"Database Object Created", Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-
-            Log.d("myDatabase", "onCreate");
             db.execSQL(DATABASE_CREATE);
             Toast.makeText(context,"Database Created", Toast.LENGTH_LONG).show();
         }
@@ -122,8 +119,7 @@ public class MySQLiteHelper{
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-            Log.w(MySQLiteHelper.class.getName(), "Upgrading database from version "+ oldVersion + " to "
-                    + newVersion + "which will destroy all old data");
+            Toast.makeText(context,"Database Upgraded", Toast.LENGTH_LONG).show();
 
             db.execSQL("DROP TABLE IF EXISTS "+ TABLE_PHOTOS);
             onCreate(db);

@@ -29,18 +29,14 @@ public class PhotoManager {
     public static PhotoManager photoManager;
 
     public static PhotoManager getInstance(Context context){
-        Log.d("DebugMain", "singleton");
+
         if(photoManager == null) {
             photoManager = new PhotoManager();
             photoManager.myDatabase = new MySQLiteHelper(context);
 
-            //Log.d("MultiObject", photoManager.myDatabase.synchronize().size()+"");
-
             photoManager.photoClasses = photoManager.myDatabase.synchronize(); //dodaj tylko te, które nie istnieją :D
-            Toast.makeText(context,"PhotoManager Created", Toast.LENGTH_LONG).show();
         }
 
-        //Log.d("MultiObject", photoManager.myDatabase.synchronize().size()+"");
         return  photoManager;
     }
 
@@ -51,39 +47,44 @@ public class PhotoManager {
     }
 
     public ArrayList<PhotoClass> getPhotoClasses(){
-        Log.d("DebugMain", photoClasses.toString());
         return photoClasses;
     }
 
-    public void loadPictureN(final ImageView imageView, final ProgressBar progressBar, final Context context, final int index, final String type){
-        Log.d( "DebugMain", "loadPicture" );
+    public void loadPicture(final ImageView imageView, final ProgressBar progressBar, final Context context, final int index, final String type){
+
         final PhotoClass photoClass = photoClasses.get( index );
 
+        //new WebManager(imageView, progressBar).execute( "https://graph.facebook.com/" + photoClass.getId() + "/picture?type="+type );
 
         Picasso.with( context ).load( "https://graph.facebook.com/" + photoClass.getId() + "/picture?type="+type ).into( imageView, new Callback() {
             @Override
             public void onSuccess() {
-                Log.d( "DebugMain", "" + "Załadowany." );
 				progressBar.setVisibility( View.INVISIBLE );
             }
 
             @Override
             public void onError() {
-                Log.d( "Picasso_ID", "" + "Problem: " + index );
-				loadPictureN( imageView, progressBar, context, index, type );
+				loadPicture( imageView, progressBar, context, index, type );
             }
         } );
-        Log.d( "DebugMain", "after loadPicture" );
+
 
 
     }
 
     public void loadPicture( final ImageView imageView, final ProgressBar progressBar, final Context context, final boolean isLeft ) {
-		//isLeft==true if imageView is left
-		//isLeft==right if imageView is right
+
 		final int index = random.nextInt( photoClasses.size() );
 		final PhotoClass photoClass = photoClasses.get( index );
-		Picasso.with( context ).load( "https://graph.facebook.com/" + photoClass.getId() + "/picture?type=large" )
+
+        new WebManager(imageView, progressBar).execute("https://graph.facebook.com/" + photoClass.getId() + "/picture?type=large");
+
+        if( isLeft )
+            left = index;
+        else
+            right = index;
+
+		/*Picasso.with( context ).load( "https://graph.facebook.com/" + photoClass.getId() + "/picture?type=large" )
 				.resize( 160, 160 ).into( imageView, new Callback() {
 			@Override
 			public void onSuccess() {
@@ -101,7 +102,7 @@ public class PhotoManager {
 				Log.d( "Picasso_ID", "" + "Problem: " + index );
 				loadPicture( imageView, progressBar, context, isLeft );
 			}
-		} );
+		} );*/
 	}
 
     private boolean idExists(String id){
@@ -126,6 +127,7 @@ public class PhotoManager {
 	}
 
 	public void setWinnerLoser( boolean leftWon ) {
+
 		PhotoClass left = photoClasses.get( this.left );
 		PhotoClass right = photoClasses.get( this.right );
 
@@ -134,14 +136,13 @@ public class PhotoManager {
 
 		if( leftWon ){
 			left.setVotes( left.getVotes() + 1 );
-            myDatabase.insert(left.getId(), left.getAppearances(), left.getVotes(), left.getRating());
-            myDatabase.insert(right.getId(), right.getAppearances(), right.getVotes(), right.getRating());
         }
 		else {
 			right.setVotes( right.getVotes() + 1 );
-            myDatabase.insert(right.getId(), right.getAppearances(), right.getVotes(), right.getRating());
-            myDatabase.insert(left.getId(), left.getAppearances(), left.getVotes(), left.getRating());
         }
+
+        myDatabase.insert(left.getId(), left.getAppearances(), left.getVotes(), left.getRating());
+        myDatabase.insert(right.getId(), right.getAppearances(), right.getVotes(), right.getRating());
 	}
 
     public void sortPhotos(){

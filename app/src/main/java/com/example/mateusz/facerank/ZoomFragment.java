@@ -3,7 +3,6 @@ package com.example.mateusz.facerank;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,6 @@ public class ZoomFragment extends Fragment {
         args.putInt("index", index);
 
         zoomFragment.setArguments(args);
-        Log.d("Fragmenty", "ZoomFragment: Return from NewInstance");
         return zoomFragment;
     }
 
@@ -40,14 +38,12 @@ public class ZoomFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        Log.d("Fragmenty", "ZoomFragment: onCreateView");
         //dynamically or using XML ?
         View view =  inflater.inflate(R.layout.zoom_layout, container, false);
-        Log.d("Fragmenty", "ZoomFragment: position" + getShownIndex());
 
         imageView = (ImageView) view.findViewById(R.id.imageView);
 		ProgressBar progressBar = ( ProgressBar ) view.findViewById( R.id.progress );
-        photoManager.getInstance(getActivity().getApplicationContext()).loadPictureN( imageView, progressBar, getActivity(), getShownIndex(), "large" );
+        photoManager.getInstance(getActivity().getApplicationContext()).loadPicture( imageView, progressBar, getActivity(), getShownIndex(), "large" );
 
         return view;
 

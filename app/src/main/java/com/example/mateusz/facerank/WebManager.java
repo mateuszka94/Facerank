@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import java.io.InputStream;
 
@@ -14,9 +16,11 @@ import java.io.InputStream;
 public class WebManager extends AsyncTask<String, Void, Bitmap> {
 
     ImageView bmImage;
+    ProgressBar progressBar;
 
-    public WebManager(ImageView bmImage) {
+    public WebManager(ImageView bmImage, ProgressBar progressBar) {
         this.bmImage = bmImage;
+        this.progressBar = progressBar;
     }
 
     protected Bitmap doInBackground(String... urls) {
@@ -36,5 +40,6 @@ public class WebManager extends AsyncTask<String, Void, Bitmap> {
     protected void onPostExecute(Bitmap result) {
         //pDlg.dismiss();
         bmImage.setImageBitmap(result);
+        progressBar.setVisibility( View.INVISIBLE );
     }
 }

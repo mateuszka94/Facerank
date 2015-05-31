@@ -31,17 +31,12 @@ public class Main extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
-        //update bazy danych
     }
-
-    //MySQLiteHelper myDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 		setContentView( R.layout.activity_main );
-
-        //SQLiteDatabase sqLiteDatabase = myDatabase.getWritableDatabase();
 
 		left = ( ImageView ) findViewById( R.id.leftImage );
         right = ( ImageView ) findViewById( R.id.rightImage );
@@ -49,14 +44,9 @@ public class Main extends Activity {
 		rightProgress = ( ProgressBar ) findViewById( R.id.rightProgress );
 
         ids = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.profile_id)));
-		Log.d("ImageView Main", "" + findViewById( R.id.leftImage ));
-
 
         photoManager = PhotoManager.getInstance(this);
 		photoManager.createPhotos( ids );
-
-        if(photoManager.getPhotoClasses() != null)
-            Log.d("MultiObject", photoManager.getPhotoClasses().size() + "");
 
 		photoManager.loadPicture( left, leftProgress, getApplicationContext(), true );
 		photoManager.loadPicture( right, rightProgress, getApplicationContext(), false );
@@ -75,16 +65,15 @@ public class Main extends Activity {
     }
 
     public void onClick( View view ) {
+
         //losuj kolejne zdjęcia i je wyświetl
-
-        Log.d("MultiObject", "Synchronized size: "+photoManager.myDatabase.synchronize().size());
-
 		leftProgress.setVisibility( View.VISIBLE );
 		rightProgress.setVisibility( View.VISIBLE );
 		if( view == left )
 			photoManager.setWinnerLoser( true );
 		else
 			photoManager.setWinnerLoser( false );
+
         photoManager.loadPicture( left, leftProgress, getApplicationContext(), true );
 		photoManager.loadPicture( right, rightProgress, getApplicationContext(), false );
 	}

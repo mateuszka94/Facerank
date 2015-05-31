@@ -34,34 +34,24 @@ public class HighScoreList extends ListFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Log.d("Fragmenty", "MyListFragment: OnActivityCreated");
-
-        //do the array adapter
         if(myPictures.size() == 0)
             populatePictureList();
 
-
-        Log.d("Fragmenty", "MyListFragment: populateList");
-
         connectArrayToListView = new MyListAdapter();
-        Log.d("Fragmenty", "MyListFragment: createMyListadapter");
         setListAdapter(connectArrayToListView);
-        Log.d("Fragmenty", "MyListFragment: SetListAdapter");
 
         View zoomFragment = getActivity().findViewById(R.id.zoom_fragment);
 
         mDuelPane = zoomFragment != null && zoomFragment.getVisibility() == View.VISIBLE;
 
         if(savedInstanceState != null){
-            mCurCheckPosition = savedInstanceState.getInt("curChoice", 0); //rozwiązać sytuację z zaznaczonym zdjęciem TODO:mateusz
+            mCurCheckPosition = savedInstanceState.getInt("curChoice", 0);
         }
 
         if(mDuelPane){
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
             showPicture(mCurCheckPosition);
         }
-
-        Log.d("Fragmenty", "MyListFragment: End of ActivityCreated");
     }
 
     private void populatePictureList(){
@@ -71,17 +61,13 @@ public class HighScoreList extends ListFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d("Fragmenty", "MyListFragment: onSaveInstance");
         outState.putInt("curChoice", mCurCheckPosition);
     }
 
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Log.d("Fragmenty", "MyListFragment: onListItemClick "+ mDuelPane);
         showPicture(position);
-        //connectArrayToListView.notifyDataSetChanged();
-
     }
 
     @Override
@@ -97,56 +83,28 @@ public class HighScoreList extends ListFragment {
 
         if(mDuelPane){
             getListView().setItemChecked(index, true);
-            Log.d("Fragmenty", "MyListFragment: In show Picture");
-
-            //put Picture data to ZoomFragment
-            //ZoomFragment zoomFragment = (ZoomFragment)getFragmentManager().findFragmentById(R.id.zoom_fragment);
-            Log.d("Fragmenty", "MyListFragment: zoom_fragment");
 
             if(zoomFragment == null || zoomFragment.getShownIndex() != index){
-                Log.d("Fragmenty", "MyListFragment: New Instance of ZoomFragment");
+
                 zoomFragment = ZoomFragment.newInstance(index);
 
                 fragmentTransaction.replace(R.id.zoom_fragment, zoomFragment);
-                Log.d("Fragmenty", "MyListFragment: Replace zoom_fragment");
                 fragmentTransaction.commit();
-                Log.d("Fragmenty", "MyListFragment: Commit");
 
             } else {
-                Log.d("Fragmenty", "MyListFragment: I am in Portrait mode");
-                /*Intent intent = new Intent();
-
-                intent.setClass(getActivity(), ZoomActivity.class);
-
-                intent.putExtra("index", index);
-                startActivityForResult(intent, REQUEST_CODE);*/
                 fragmentTransaction.replace(R.id.zoom_fragment, zoomFragment);
 
             }
         }else {
 
-            /*Log.d("Fragmenty", "MyListFragment: I am in Portrait mode");
-            if(zoomFragment != null || zoomFragment.getShownIndex() != index)
-                zoomFragment = ZoomFragment.newInstance(index);
-
-            Log.d("Fragmenty", "MyListFragment: before replacing");
-            fragmentTransaction.replace(R.id.container, zoomFragment).commit();*/
-
-            Log.d("Fragmenty", "MyListFragment: I am in Portrait mode");
             Intent intent = new Intent(getActivity().getApplicationContext(), ZoomActivity.class);
-            //intent.setClass(getActivity().getApplicationContext(), ZoomActivity.class);
-            Log.d("Fragmenty", "MyListFragment: After setting class");
             intent.putExtra("index", index);
             getActivity().startActivity(intent);
-            Log.d("Fragmenty", "MyListFragment: After starting new class");
-
-
 
         }
 
     }
 
-    //Override ArrayAdapter, in layout i have a item_list layout and more :D
     private class MyListAdapter extends ArrayAdapter<PhotoClass> {
 
         public MyListAdapter() {
@@ -178,7 +136,7 @@ public class HighScoreList extends ListFragment {
             ImageView imageView = (ImageView) itemView.findViewById(R.id.item_image);
 			ProgressBar progressBar = ( ProgressBar ) itemView.findViewById( R.id.progress );
 			progressBar.setVisibility( View.VISIBLE );
-            photoManager.getInstance(getContext()).loadPictureN(imageView, progressBar, getActivity().getApplicationContext(), position, "normal"); //problem z ładowaniem zdjęcia
+            photoManager.getInstance(getContext()).loadPicture(imageView, progressBar, getActivity().getApplicationContext(), position, "normal"); //problem z ładowaniem zdjęcia
 
             TextView textView = (TextView)itemView.findViewById(R.id.item_text);
             textView.setText(photoManager.getInstance(getContext()).getPhotoByPosition(position).getRating()*100+"%");
